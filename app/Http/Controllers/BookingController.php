@@ -34,7 +34,7 @@ class BookingController extends Controller
         $booking = Booking::where('id', $id)
             ->where('user_id', auth()->id())
             ->firstOrFail();
-        
+
         $booking->update(['status' => BookingStatus::CANCELLED->value]);
         return response()->json($booking, 200);
     }

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait CommonQueryScopes
 {
     public function scopeFilterByDate(Builder $query, ?string $startDate = null, ?string $endDate = null): Builder
