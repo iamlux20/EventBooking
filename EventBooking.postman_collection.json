@@ -1,0 +1,325 @@
+{
+	"info": {
+		"name": "Event Booking API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api"
+		},
+		{
+			"key": "auth_token",
+			"value": ""
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password\",\n    \"password_confirmation\": \"password\",\n    \"phone_number\": \"1234567890\",\n    \"role\": \"customer\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": ["{{base_url}}"],
+							"path": ["register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": ["{{base_url}}"],
+							"path": ["login"]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{base_url}}/logout",
+							"host": ["{{base_url}}"],
+							"path": ["logout"]
+						}
+					}
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/me",
+							"host": ["{{base_url}}"],
+							"path": ["me"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Events (Public)",
+			"item": [
+				{
+					"name": "List Events",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/events",
+							"host": ["{{base_url}}"],
+							"path": ["events"]
+						}
+					}
+				},
+				{
+					"name": "Get Event",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/events/1",
+							"host": ["{{base_url}}"],
+							"path": ["events", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Events (Organizer)",
+			"item": [
+				{
+					"name": "Create Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Sample Event\",\n    \"description\": \"Event description\",\n    \"date\": \"2024-12-31\",\n    \"time\": \"18:00:00\",\n    \"location\": \"Event Location\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/events",
+							"host": ["{{base_url}}"],
+							"path": ["events"]
+						}
+					}
+				},
+				{
+					"name": "Update Event",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated Event\",\n    \"description\": \"Updated description\",\n    \"date\": \"2024-12-31\",\n    \"time\": \"19:00:00\",\n    \"location\": \"Updated Location\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/events/1",
+							"host": ["{{base_url}}"],
+							"path": ["events", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Event",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/events/1",
+							"host": ["{{base_url}}"],
+							"path": ["events", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Tickets (Organizer)",
+			"item": [
+				{
+					"name": "Create Ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"general\",\n    \"price\": 50.00,\n    \"quantity\": 100\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/events/1/tickets",
+							"host": ["{{base_url}}"],
+							"path": ["events", "1", "tickets"]
+						}
+					}
+				},
+				{
+					"name": "Update Ticket",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"vip\",\n    \"price\": 100.00,\n    \"quantity\": 50\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tickets/1",
+							"host": ["{{base_url}}"],
+							"path": ["tickets", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Ticket",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/tickets/1",
+							"host": ["{{base_url}}"],
+							"path": ["tickets", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Bookings (Customer)",
+			"item": [
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantity\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tickets/1/bookings",
+							"host": ["{{base_url}}"],
+							"path": ["tickets", "1", "bookings"]
+						}
+					}
+				},
+				{
+					"name": "List User Bookings",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/bookings",
+							"host": ["{{base_url}}"],
+							"path": ["bookings"]
+						}
+					}
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"method": "PUT",
+						"url": {
+							"raw": "{{base_url}}/bookings/1/cancel",
+							"host": ["{{base_url}}"],
+							"path": ["bookings", "1", "cancel"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "Make Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 100.00\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/bookings/1/payment",
+							"host": ["{{base_url}}"],
+							"path": ["bookings", "1", "payment"]
+						}
+					}
+				},
+				{
+					"name": "View Payment",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/payments/1",
+							"host": ["{{base_url}}"],
+							"path": ["payments", "1"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
