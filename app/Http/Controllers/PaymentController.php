@@ -10,6 +10,7 @@ use App\Enums\PaymentStatus;
 use App\Enums\BookingStatus;
 use Illuminate\Http\Request;
 use App\Services\PaymentService;
+use App\Notifications\BookingConfirmed;
 
 class PaymentController extends Controller
 {
@@ -32,7 +33,9 @@ class PaymentController extends Controller
         ]);
 
         if ($status) {
-            Booking::where('id', $id)->update(['status' => BookingStatus::CONFIRMED->value]);
+            $booking = Booking::with('user')->find($id);
+            $booking->update(['status' => BookingStatus::CONFIRMED->value]);
+            $booking->user->notify(new BookingConfirmed($booking));
         }
 
         return $status ? response()->json($payment, 201) : response()->json(['message' => 'Payment failed!'], 418);

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,9 @@ class EventFactory extends Factory
     {
         return [
             'title' => fake()->sentence(3),
+            'description' => fake()->sentence(3),
             'date' => fake()->dateTimeBetween('now', '+6 months')->format('Y-m-d'),
+            'created_by' => User::factory(),
             'location' => fake()->city() . ', ' . fake()->state(),
         ];
     }
