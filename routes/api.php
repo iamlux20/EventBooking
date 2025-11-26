@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Customer routes
     Route::middleware('role:customer')->group(function () {
         // Booking APIs
-        Route::post('tickets/{id}/bookings', [BookingController::class, 'store']);
+        Route::post('tickets/{id}/bookings', [BookingController::class, 'store'])->middleware('prevent.double.booking');
         Route::get('bookings', [BookingController::class, 'index']);
         Route::put('bookings/{id}/cancel', [BookingController::class, 'cancel']);
 

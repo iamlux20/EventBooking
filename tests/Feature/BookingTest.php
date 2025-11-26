@@ -93,4 +93,25 @@ class BookingTest extends TestCase
             'status' => BookingStatus::CANCELLED->value,
         ]);
     }
+
+    public function test_customer_cannot_double_book_same_ticket()
+    {
+        $customer = User::factory()->create(['role' => UserRole::CUSTOMER->value]);
+        $ticket = Ticket::factory()->create();
+        Booking::factory()->create([
+            'user_id' => $customer->id,
+            'ticket_id' => $ticket->id,
+            'status' => BookingStatus::PENDING->value,
+        ]);
+        $token = $customer->createToken('test')->plainTextToken;
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->postJson("/api/tickets/{$ticket->id}/bookings", [
+            'quantity' => 1,
+        ]);
+
+        $response->assertStatus(409)
+            ->assertJson(['message' => 'You already have an active booking for this ticket']);
+    }
 }
