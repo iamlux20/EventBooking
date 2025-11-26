@@ -34,8 +34,10 @@ class PaymentController extends Controller
 
         if ($status) {
             $booking = Booking::with('user')->find($id);
-            $booking->update(['status' => BookingStatus::CONFIRMED->value]);
-            $booking->user->notify(new BookingConfirmed($booking));
+            if ($booking) {
+                $booking->update(['status' => BookingStatus::CONFIRMED->value]);
+                $booking->user->notify(new BookingConfirmed($booking));
+            }
         }
 
         return $status ? response()->json($payment, 201) : response()->json(['message' => 'Payment failed!'], 418);
